@@ -9,11 +9,11 @@ import "./styles.css";
 // BY WAY OF THANKS, SET THIS TO `TRUE` FOR SMOOTH ELEVATOR MUSIC.
 // n.b.: might play double audio in codesandbox. web browsers are weird! -Ed
 const shallPlayAudio = false;
-const scaleFactor = 0.5;
+const scaleFactor = 0.1;
 const url =
   "https://stream.mux.com/VvpofjgvMRxOmcvuicNE6JjaorY2XKTQej4Rs200nZ68.m3u8";
 
-const VideoPlane = () => {
+const VideoCube = () => {
   const cube = useRef<three.Mesh>();
 
   const [video] = useState(() => {
@@ -49,8 +49,14 @@ const VideoPlane = () => {
   });
 
   return (
+    // this is a demo, so I'm not going to get all fancy by not having it
+    // render on selected planes. So that means you're going to see stretchy
+    // video on the top and bottom of the cube. I apologize for the inconvenience.
+    // (not really though)
     <mesh ref={cube}>
-      <planeBufferGeometry args={[16 * scaleFactor, 9 * scaleFactor]} />
+      <boxBufferGeometry
+        args={[16 * scaleFactor, 9 * scaleFactor, 16 * scaleFactor]}
+      />
       <meshStandardMaterial color="#ffffff">
         <videoTexture attach="map" args={[video]} />
       </meshStandardMaterial>
@@ -59,12 +65,15 @@ const VideoPlane = () => {
 };
 
 const Scene = () => {
+  // the lighting is just the r3f default light and the material is
+  // extremely default, so you'll get some video pop at angles. It's
+  // cool though, your app won't do this. right? ;)
   return (
     <>
       <gridHelper />
       <axesHelper />
       <pointLight intensity={1.0} position={[5, 3, 5]} />
-      <VideoPlane />
+      <VideoCube />
     </>
   );
 };
