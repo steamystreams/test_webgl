@@ -37,6 +37,7 @@ const VideoCube = () => {
   useEffect(() => {
     return function () {
       video?.pause();
+      video?.remove();
     };
   });
 
