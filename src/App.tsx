@@ -14,8 +14,7 @@ const url =
   "https://stream.mux.com/VvpofjgvMRxOmcvuicNE6JjaorY2XKTQej4Rs200nZ68.m3u8";
 
 const VideoCube = () => {
-  const cube = useRef<three.Mesh>();
-
+  // video stuff
   const [video] = useState(() => {
     const videoElement = document.createElement("video");
     const hls = new Hls();
@@ -41,6 +40,9 @@ const VideoCube = () => {
     };
   });
 
+  // cube stuff
+  const cube = useRef<three.Mesh>();
+
   useFrame(() => {
     if (cube.current) {
       cube.current.rotation.x += 0.01;
@@ -48,11 +50,11 @@ const VideoCube = () => {
     }
   });
 
+  // this is a demo, so I'm not going to get all fancy by not having it
+  // render on selected planes. So that means you're going to see stretchy
+  // video on the top and bottom of the cube. I apologize for the inconvenience.
+  // (not really though)
   return (
-    // this is a demo, so I'm not going to get all fancy by not having it
-    // render on selected planes. So that means you're going to see stretchy
-    // video on the top and bottom of the cube. I apologize for the inconvenience.
-    // (not really though)
     <mesh ref={cube}>
       <boxBufferGeometry
         args={[16 * scaleFactor, 9 * scaleFactor, 16 * scaleFactor]}
